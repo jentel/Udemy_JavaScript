@@ -154,7 +154,7 @@ interviewQuestion('teacher')('Mark');
 */
 
 /******************************************************************************/
-// IIFE
+/*// IIFE
 
 // function game() {
 //     var score = Math.random() * 10;
@@ -175,3 +175,47 @@ interviewQuestion('teacher')('Mark');
     var score = Math.random() * 10;
     console.log(score >= 5 - goodLuck);
 })(5); // how to pass parameters
+*/
+
+/******************************************************************************/
+// Closures
+
+function retirement(retirementAge) {
+    var a = ' years left until retirement.';
+    return function(yearOfBirth) {
+        var age = 2018 - yearOfBirth;
+        console.log(retirementAge - age + a);
+    }
+}
+
+var retirementUS = retirement(66);
+retirementUS(1990);
+
+var retirementGermany = retirement(65);
+var retirementIceland = retirement(67);
+
+retirementGermany(1990);
+retirementIceland(1990);
+
+//retirement(66)(1993);
+
+// My answer
+function interviewQuestion(job) {
+    return function(name) {
+        switch(job) {
+            case 'designer':
+                console.log(name + ', can you please explain what UX design is?');
+                break;
+            case 'teacher':
+                console.log('What subject do you teach, ' + name + '?');
+                break;
+            default:
+                console.log('Hello ' + name + ', what do you do?');
+                break;
+        }
+    }
+}
+
+interviewQuestion('teacher')('John');
+interviewQuestion('designer')('Jane');
+interviewQuestion('police officer')('Mark');
