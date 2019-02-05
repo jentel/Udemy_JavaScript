@@ -127,7 +127,7 @@ console.log(rates);
 */
 
 /******************************************************************************/
-// Functions returning Functions
+/*// Functions returning Functions
 
 function interviewQuestion(job) { // returns an object
     if(job === 'designer'){
@@ -151,3 +151,27 @@ teacherQuestion('John');
 designerQuestion('Jane');
 
 interviewQuestion('teacher')('Mark');
+*/
+
+/******************************************************************************/
+// IIFE
+
+// function game() {
+//     var score = Math.random() * 10;
+//     console.log(score >= 5);
+// }
+
+// game();
+
+(function() { // treats it as an expression, not a declaration because of ), this is an IIFE
+        var score = Math.random() * 10;
+        console.log(score >= 5);
+    })();
+
+//console.log(score); // cannot see score variable
+
+// new scope, data privacy, and safely keep variables safe
+(function(goodLuck) { 
+    var score = Math.random() * 10;
+    console.log(score >= 5 - goodLuck);
+})(5); // how to pass parameters
