@@ -59,6 +59,25 @@ var budgetController = (function() { // modular pattern
             return newItem;
         },
 
+        deleteItem: function(type, id) {
+            var ids, index;
+            // id = 6
+            // data.allItems[type][id];
+            // ids = [1 2 4 6 8]
+            // index = 3
+            
+            // map returns a brand new array
+            ids = data.allItems[type].map(function(current) {
+                return current.id;
+            });
+
+            index = ids.indexOf(id);
+
+            if(index !== -1) {
+                data.allItems[type].splice(index, 1); // removes the element at the index, and only remove 1 element
+            }
+        },
+
         calculateBudget: function() {
             // calculate total income and expenses
             calculcuateTotal('exp');
@@ -126,7 +145,7 @@ var UIController = (function() {
             // create html string with placeholder text
             if(type === 'inc'){
                 element = DOMstrings.incomeContainer;
-                html = ' <div class="item clearfix" id="income-%id%">' +
+                html = ' <div class="item clearfix" id="inc-%id%">' +
                             '<div class="item__description">%description%</div>' +
                             '<div class="right clearfix">' +
                                 '<div class="item__value">%value%</div>' +
@@ -137,7 +156,7 @@ var UIController = (function() {
                         '</div>';
             } else if(type === 'exp') {
                 element = DOMstrings.expenseContainer;
-                html =  '<div class="item clearfix" id="expense-%id%">' + 
+                html =  '<div class="item clearfix" id="exp-%id%">' + 
                             '<div class="item__description">%description%</div>' +
                             '<div class="right clearfix">' +
                                 '<div class="item__value">%value%</div>' +
@@ -245,16 +264,17 @@ var controller = (function(budgetCtrl, UICtrl) {
     var ctrlDeleteItem = function(event) {
         var itemID, splitID, type, ID;
 
-        itemID = event.target.parentNode.parentNode.parentNode.parentNode.id;
+        itemID = event.target.parentNode.parentNode.parentNode.id;
 
         if(itemID) {
 
             // inc-1
-            splitID = itemID.splitID('-');
+            splitID = itemID.split('-');
             type = splitID[0];
-            ID = splitID[1];
+            ID = parseInt(splitID[1]);
 
             // 1. delete the item from the data structure
+            budgetCtrl.deleteItem(type, ID);
 
             // 2. delete the item from the UI
 
